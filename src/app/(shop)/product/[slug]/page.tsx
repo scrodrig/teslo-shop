@@ -1,3 +1,4 @@
+import { SizeSelector } from "@/components";
 import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
 import { titleFont } from "@/config/fonts";
@@ -28,8 +29,8 @@ export default function ProductPage({ params: { slug } }: ProductPageProps) {
           {product.title}
         </h1>
         <p className="text-lg mb-5">${product.price}</p>
-
         {/* Size selector */}
+        <SizeSelector availableSizes={product.sizes} selectedSize={product.sizes[1]}/>
         {/* Quantity selector */}
         {/* Button */}
         <button className="btn-primary my-5">Add to cart</button>
