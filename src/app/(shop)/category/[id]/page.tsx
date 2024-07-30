@@ -1,12 +1,12 @@
 import { ProductGrid, Title } from "@/components";
 
-import { ValidCategory } from "@/interfaces";
+import { Category } from "@/interfaces";
 import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
 
 interface CategoryPageProps {
   params: {
-    id: ValidCategory;
+    id: Category;
   };
 }
 
@@ -19,7 +19,7 @@ export default function CategoryPage({ params: { id } }: CategoryPageProps) {
 
   const products = seedProducts.filter((product) => product.gender === id);
 
-  const labels: Record<ValidCategory, string> = {
+  const labels: Record<Category, string> = {
     men: "Men",
     women: "Women",
     kid: "Kids",
