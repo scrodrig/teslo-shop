@@ -3,13 +3,24 @@ import prisma from "../lib/prisma";
 // import prims
 
 async function main() {
+  //? Delete data
   await Promise.all([
     prisma.productImage.deleteMany(),
     prisma.product.deleteMany(),
     prisma.category.deleteMany(),
   ]);
+
+  //? Add a category
+
+  const { categories, products } = initialData;
+
+  const categoriesData = categories.map((category) => ({ name: category }));
   
-  console.log("Seed executed...", process.env.NODE_ENV);
+  await prisma.category.createMany({
+    data: categoriesData
+  });
+
+  console.log("Seed executed...");
 }
 
 (() => {
