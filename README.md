@@ -8,4 +8,5 @@
 2. Create a `.env` file in the root of the project, and use the `.env`.example` as a template
 3. Run `npm install`
 4. Run `docker-compose up -d`
-5. Run `npm run dev`
+5. Run prisma migration `npx prisma migrate dev`
+6. Run `npm run dev`
