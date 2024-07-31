@@ -28,7 +28,6 @@ async function main() {
   }, {} as Record<string, string>);
   console.log("🚀 ~ categoriesMap ~ categoriesMap:", categoriesMap);
 
-  // const {images, type, ...product1} = products[0];
 
   products.forEach(async (product) => {
     const { images, type, ...productData } = product;
@@ -38,6 +37,7 @@ async function main() {
         categoryId: categoriesMap[type.toLowerCase()],
       },
     });
+    //? Add image
     const imagesData = images.map((image) => ({
       url: image,
       productId: productDb.id,
@@ -47,9 +47,7 @@ async function main() {
       data: imagesData,
     });
   });
-
-  //? Add image
-
+  
   console.log("Seed executed...");
 }
 
