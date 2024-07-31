@@ -9,4 +9,5 @@
 3. Run `npm install`
 4. Run `docker-compose up -d`
 5. Run prisma migration `npx prisma migrate dev`
-6. Run `npm run dev`
+6. Run seed `npm run seed`
+7. Run `npm run dev`
