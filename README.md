@@ -11,3 +11,4 @@
 5. Run prisma migration `npx prisma migrate dev` (No prev data is synced)
 6. Run seed `npm run seed`
 7. Run `npm run dev`
+8. Open `http://localhost:3000` in your browser
