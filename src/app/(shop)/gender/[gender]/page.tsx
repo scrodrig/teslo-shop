@@ -1,3 +1,5 @@
+export const revalidate = 60 // 1 minute
+
 import { Pagination, ProductGrid, Title } from '@/components'
 
 import { Gender } from '@prisma/client'
