@@ -9,6 +9,7 @@ import {
   StockLabel,
 } from '@/components'
 
+import { AddToCart } from './ui/AddToCart'
 import { getProductbySlug } from '@/actions'
 import { notFound } from 'next/navigation'
 import { titleFont } from '@/config/fonts'
@@ -72,12 +73,9 @@ export default async function ProductPage({ params: { slug } }: ProductPageProps
         <StockLabel slug={slug} />
         <h1 className={`${titleFont.className} antialiases font-bold text-xl`}>{product.title}</h1>
         <p className="text-lg mb-5">${product.price}</p>
-        {/* Size selector */}
-        <SizeSelector availableSizes={product.sizes} selectedSize={product.sizes[1]} />
-        {/* Quantity selector */}
-        <QuantitySelector quantity={0} />
-        {/* Button */}
-        <button className="btn-primary my-5">Add to cart</button>
+
+        <AddToCart product={product} />
+
         {/* Description */}
         <h3 className="font-bold text-sm">Description</h3>
         <p className="font-light">{product.description}</p>
