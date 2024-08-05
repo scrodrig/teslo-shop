@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
 
