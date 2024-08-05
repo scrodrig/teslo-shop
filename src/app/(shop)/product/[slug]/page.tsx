@@ -5,6 +5,7 @@ import {
   ProductSlideshowMobile,
   QuantitySelector,
   SizeSelector,
+  StockLabel,
 } from '@/components'
 
 import { getProductbySlug } from '@/actions'
@@ -43,6 +44,7 @@ export default async function ProductPage({ params: { slug } }: ProductPageProps
 
       {/* Details */}
       <div className="col-span-1 px-5">
+        <StockLabel slug={slug} />
         <h1 className={`${titleFont.className} antialiases font-bold text-xl`}>{product.title}</h1>
         <p className="text-lg mb-5">${product.price}</p>
         {/* Size selector */}
