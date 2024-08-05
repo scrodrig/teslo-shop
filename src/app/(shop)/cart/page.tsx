@@ -1,16 +1,16 @@
-import { QuantitySelector, Title } from "@/components";
+import { QuantitySelector, Title } from '@/components'
 
-import Image from "next/image";
-import Link from "next/link";
-import { Product } from "@/interfaces";
-import { initialData } from "@/seed/seed";
-import { redirect } from "next/navigation";
+import Image from 'next/image'
+import Link from 'next/link'
+import { Product } from '@/interfaces'
+import { initialData } from '@/seed/seed'
+import { redirect } from 'next/navigation'
 
 const productsInCart: Product[] = [
-  initialData.products[0],
-  initialData.products[1],
-  initialData.products[2],
-];
+  { ...initialData.products[0], ...{ id: '1' } },
+  { ...initialData.products[1], ...{ id: '2' } },
+  { ...initialData.products[2], ...{ id: '3' } },
+]
 
 export default function CartPage() {
   // redirect("/empty");
@@ -35,7 +35,7 @@ export default function CartPage() {
                   width={100}
                   height={100}
                   className="mr-5 rounded"
-                  style={{ width: "100px", height: "100px" }}
+                  style={{ width: '100px', height: '100px' }}
                 />
                 <div>
                   <p>{product.title}</p>
@@ -48,7 +48,7 @@ export default function CartPage() {
           </div>
           {/* Checkout */}
           <div className="bg-white rounded-xl shadow-xl p-7 h-fit">
-          {/* <div className="bg-white rounded-xl shadow-xl p-7 h-[300px]"> */}
+            {/* <div className="bg-white rounded-xl shadow-xl p-7 h-[300px]"> */}
             <h2 className="text-2xl mb-2">Order Summary</h2>
             <div className="grid grid-cols-2">
               <span>No. Productos</span>
@@ -65,10 +65,7 @@ export default function CartPage() {
             </div>
 
             <div className="mt-5 mb-2 w-full">
-              <Link
-                href="/checkout/address"
-                className="flex justify-center btn-primary"
-              >
+              <Link href="/checkout/address" className="flex justify-center btn-primary">
                 Checkout
               </Link>
             </div>
@@ -76,5 +73,5 @@ export default function CartPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
