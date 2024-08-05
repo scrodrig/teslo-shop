@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '@/interfaces'
 import { initialData } from '@/seed/seed'
-import { redirect } from 'next/navigation'
 
 const productsInCart: Product[] = [
   { ...initialData.products[0], ...{ id: '1' } },
