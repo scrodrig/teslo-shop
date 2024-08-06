@@ -8,7 +8,12 @@ interface State {
   getTotalItems: () => number
   updateProductQuantity: (product: CartItem, quantity: number) => void
   removeFromCart: (product: CartItem) => void
-  // updateQuantity: (id: string, quantity: number) => void
+  getSummaryInformation: () => {
+    totalItems: number
+    subTotal: number
+    totalPrice: number
+    tax: number
+  }
 }
 
 export const useCartStore = create<State>()(
@@ -70,7 +75,17 @@ export const useCartStore = create<State>()(
         )
 
         set({ cart: updatedCartProducts })
-      }
+      },
+      getSummaryInformation: () => {
+        const { cart } = get()
+
+        const totalItems = cart.reduce((total, item) => total + item.quantity, 0)
+        const subTotal = cart.reduce((subTotal, item) => subTotal + item.price * item.quantity, 0)
+        const tax = subTotal * 0.23
+        const totalPrice = subTotal + tax
+
+        return { totalItems, subTotal, tax, totalPrice }
+      },
     }),
     {
       name: 'shopping-cart',
