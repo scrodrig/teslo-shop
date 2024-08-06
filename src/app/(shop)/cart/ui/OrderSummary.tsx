@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
+import { currencyFormater } from '@/utils'
 import { useCartStore } from '@/store'
 
 export const OrderSummary = () => {
@@ -28,13 +29,13 @@ export const OrderSummary = () => {
         </span>
 
         <span>Subtotal</span>
-        <span className="text-right">${subTotal}</span>
+        <span className="text-right">{currencyFormater(subTotal)}</span>
 
         <span>Impuestos</span>
-        <span className="text-right">${tax}</span>
+        <span className="text-right">{currencyFormater(tax)}</span>
 
         <span className="text-xl font-bold mt-5">Total:</span>
-        <span className="text-xl mt-5 text-right">${totalPrice}</span>
+        <span className="text-xl mt-5 text-right">{currencyFormater(totalPrice)}</span>
       </div>
     </>
   )
