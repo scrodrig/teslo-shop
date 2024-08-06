@@ -4,8 +4,9 @@
 
 // 'use server'
 
+import { authenticate } from './auth/login'
 import { getPaginatedProductsWithImages } from './product/get-product-pagination'
 import { getProductbySlug } from './product/get-product-by-slug'
 import { getStockBySlug } from './product/get-stock-by-slug'
 
-export { getPaginatedProductsWithImages, getProductbySlug, getStockBySlug }
+export { getPaginatedProductsWithImages, getProductbySlug, getStockBySlug, authenticate }
