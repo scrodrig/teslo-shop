@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react'
 
 import { currencyFormater } from '@/utils'
 import { useCartStore } from '@/store'
+import { useRouter } from 'next/navigation'
 
 export const OrderSummary = () => {
+  const router = useRouter()
   const [loaded, setLoaded] = useState(false)
 
   const { subTotal, tax, totalItems, totalPrice } = useCartStore((state) =>
@@ -15,6 +17,13 @@ export const OrderSummary = () => {
   useEffect(() => {
     setLoaded(true)
   }, [])
+
+  useEffect(() => {
+    if (totalItems === 0 && loaded === true) {
+      router.replace('/empty')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalItems, loaded])
 
   if (!loaded) {
     return <div>Loading...</div>
