@@ -1,18 +1,8 @@
-import { QuantitySelector, Title } from '@/components'
-
-import Image from 'next/image'
 import Link from 'next/link'
-import { Product } from '@/interfaces'
-import { initialData } from '@/seed/seed'
-
-const productsInCart: Product[] = [
-  { ...initialData.products[0], ...{ id: '1' } },
-  { ...initialData.products[1], ...{ id: '2' } },
-  { ...initialData.products[2], ...{ id: '3' } },
-]
+import { ProductsInCart } from './ui/ProductsInCart'
+import { Title } from '@/components'
 
 export default function CartPage() {
-  // redirect("/empty");
 
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
@@ -26,24 +16,7 @@ export default function CartPage() {
               Keep shopping
             </Link>
             {/* Product list */}
-            {productsInCart.map((product) => (
-              <div key={product.slug} className="flex">
-                <Image
-                  src={`/products/${product.images[0]}`}
-                  alt={product.title}
-                  width={100}
-                  height={100}
-                  className="mr-5 rounded"
-                  style={{ width: '100px', height: '100px' }}
-                />
-                <div>
-                  <p>{product.title}</p>
-                  <p>${product.price}</p>
-                  <QuantitySelector quantity={3} />
-                  <button className="underline mt-3">Remove</button>
-                </div>
-              </div>
-            ))}
+            <ProductsInCart />
           </div>
           {/* Checkout */}
           <div className="bg-white rounded-xl shadow-xl p-7 h-fit">
