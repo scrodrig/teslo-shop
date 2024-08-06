@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { OrderSummary } from './ui/OrderSummary'
 import { ProductsInCart } from './ui/ProductsInCart'
 import { Title } from '@/components'
 
@@ -22,19 +23,8 @@ export default function CartPage() {
           <div className="bg-white rounded-xl shadow-xl p-7 h-fit">
             {/* <div className="bg-white rounded-xl shadow-xl p-7 h-[300px]"> */}
             <h2 className="text-2xl mb-2">Order Summary</h2>
-            <div className="grid grid-cols-2">
-              <span>No. Productos</span>
-              <span className="text-right">3 articles</span>
-
-              <span>Subtotal</span>
-              <span className="text-right">$100</span>
-
-              <span>Impuestos</span>
-              <span className="text-right">$23</span>
-
-              <span className="text-xl font-bold mt-5">Total:</span>
-              <span className="text-xl mt-5 text-right">$123</span>
-            </div>
+            
+            <OrderSummary />
 
             <div className="mt-5 mb-2 w-full">
               <Link href="/checkout/address" className="flex justify-center btn-primary">
