@@ -11,6 +11,7 @@ import { useCartStore } from '@/store'
 export const ProductsInCart = () => {
   const productsInCart = useCartStore((state) => state.cart)
   const updateProductQuantity = useCartStore((state) => state.updateProductQuantity)
+  const removeFromCart = useCartStore((state) => state.removeFromCart)
 
   const [loaded, setLoaded] = useState(false)
 
@@ -29,7 +30,7 @@ export const ProductsInCart = () => {
   return (
     <>
       {productsInCart.map((product) => (
-        <div key={`${product.slug}-${product.size}`} className="flex">
+        <div key={`${product.slug}-${product.size}`} className="flex mt-5">
           <Image
             src={`/products/${product.image}`}
             alt={product.title}
@@ -49,7 +50,9 @@ export const ProductsInCart = () => {
               quantity={product.quantity}
               onQuantityChange={(quantity) => onQuantityChange(product, quantity)}
             />
-            <button className="underline mt-3">Remove</button>
+            <button className="underline mt-3" onClick={() => removeFromCart(product)}>
+              Remove
+            </button>
           </div>
         </div>
       ))}
