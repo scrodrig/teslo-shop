@@ -25,6 +25,11 @@ export const authConfig: NextAuthConfig = {
           console.log('email', email);
           console.log('password', password);
 
+          //Look for the user in the database
+
+          //If the user is not found, return null
+
+          //If the user is found, return the user object
 
           return null;
       },
