@@ -30,7 +30,7 @@ export const ProductsInCart = () => {
   return (
     <>
       {productsInCart.map((product) => (
-        <div key={`${product.slug}-${product.size}`} className="flex mt-5">
+        <div key={`${product.slug}-${product.size}`} className="flex">
           <Image
             src={`/products/${product.image}`}
             alt={product.title}
@@ -50,7 +50,7 @@ export const ProductsInCart = () => {
               quantity={product.quantity}
               onQuantityChange={(quantity) => onQuantityChange(product, quantity)}
             />
-            <button className="underline mt-3" onClick={() => removeFromCart(product)}>
+            <button className="underline mt-3 mb-5" onClick={() => removeFromCart(product)}>
               Remove
             </button>
           </div>
