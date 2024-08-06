@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
+import { CartItem } from '@/interfaces'
 import Image from 'next/image'
 import Link from 'next/link'
 import { QuantitySelector } from '@/components'
@@ -9,6 +10,7 @@ import { useCartStore } from '@/store'
 
 export const ProductsInCart = () => {
   const productsInCart = useCartStore((state) => state.cart)
+  const updateProductQuantity = useCartStore((state) => state.updateProductQuantity)
 
   const [loaded, setLoaded] = useState(false)
 
@@ -18,6 +20,10 @@ export const ProductsInCart = () => {
 
   if (!loaded) {
     return <div>Loading...</div>
+  }
+
+  const onQuantityChange = (product: CartItem, quantity: number) => {
+    updateProductQuantity(product, quantity)
   }
 
   return (
@@ -34,10 +40,15 @@ export const ProductsInCart = () => {
           />
           <div>
             <Link href={`/product/${product.slug}`} className="hover:underline cursor-pointer">
-              <p>{product.title} - {product.size}</p>
+              <p>
+                {product.title} - {product.size}
+              </p>
             </Link>
             <p>${product.price}</p>
-            <QuantitySelector quantity={3} onQuantityChange={() => {}} />
+            <QuantitySelector
+              quantity={product.quantity}
+              onQuantityChange={(quantity) => onQuantityChange(product, quantity)}
+            />
             <button className="underline mt-3">Remove</button>
           </div>
         </div>
