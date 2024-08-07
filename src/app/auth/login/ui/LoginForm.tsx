@@ -7,6 +7,8 @@ import { IoInformationOutline } from 'react-icons/io5'
 import Link from 'next/link'
 import { authenticate } from '@/actions'
 import clsx from 'clsx'
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export const LoginForm = () => {
   // const [errorMessage, formAction, isPending] = useActionState(
@@ -15,8 +17,14 @@ export const LoginForm = () => {
   // );
 
   const [state, dispatch] = useFormState(authenticate, undefined)
+  const router = useRouter()
 
-  console.log('state', { state })
+  useEffect(() => {
+    if (state === 'Success') {
+      router.replace('/')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state])
 
   return (
     <form action={dispatch} className="flex flex-col">
