@@ -10,6 +10,7 @@ import {
   IoShareOutline,
   IoTicketOutline,
 } from 'react-icons/io5'
+import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
 import clsx from 'clsx'
@@ -21,8 +22,8 @@ export const Sidebar = () => {
   const isSideMenuOpen = useUiStore((state) => state.isSideMenuOpen)
   const closeMenu = useUiStore((state) => state.closeSideMenu)
 
+  
   const { data: session } = useSession()
-
   const isAuthenticated = !!session?.user
 
   return (
