@@ -7,7 +7,7 @@ import { signIn } from '@/auth.config'
 
 export async function authenticate(prevState: string | undefined, formData: FormData) {
   try {
-    console.log('formData', {formData: Object.fromEntries(formData)})
+    console.log('formData', { formData: Object.fromEntries(formData) })
     await signIn('credentials', formData)
   } catch (error) {
     if (error instanceof AuthError) {
