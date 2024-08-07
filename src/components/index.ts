@@ -1,13 +1,14 @@
-export { QuantitySelector } from "./product/quantity-selector/QuantitySelector";
-export { ProductSlideshow } from "./product/slideshow/ProductSlideshow";
-export { ProductSlideshowMobile } from "./product/slideshow/ProductSlideshowMobile";
-export { SizeSelector } from "./product/size-selector/SizeSelector";
-export { Sidebar } from "./ui/sidebar/Sidebar";
-export { ProductItem } from "./products/product-grid/ProductGridItem";
-export { ProductGrid } from "./products/product-grid/ProductGrid";
-export { Title } from "./ui/title/Title";
-export { PageNotFound } from "./ui/not-found/PageNotFound";
-export { TopMenu } from "./ui/top-menu/TopMenu";
-export { Footer } from "./ui/footer/Footer";
-export { Pagination} from "./ui/pagination/Pagination";
-export { StockLabel } from "./product/stock-label/StockLabel";
+export { Provider } from './provider/Provider'
+export { QuantitySelector } from './product/quantity-selector/QuantitySelector'
+export { ProductSlideshow } from './product/slideshow/ProductSlideshow'
+export { ProductSlideshowMobile } from './product/slideshow/ProductSlideshowMobile'
+export { SizeSelector } from './product/size-selector/SizeSelector'
+export { Sidebar } from './ui/sidebar/Sidebar'
+export { ProductItem } from './products/product-grid/ProductGridItem'
+export { ProductGrid } from './products/product-grid/ProductGrid'
+export { Title } from './ui/title/Title'
+export { PageNotFound } from './ui/not-found/PageNotFound'
+export { TopMenu } from './ui/top-menu/TopMenu'
+export { Footer } from './ui/footer/Footer'
+export { Pagination } from './ui/pagination/Pagination'
+export { StockLabel } from './product/stock-label/StockLabel'
