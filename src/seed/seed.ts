@@ -713,13 +713,13 @@ export const initialData: SeedData = {
   ],
   users: [
     {
-      email: 'scrodrig',
+      email: 'scrodrig@mail.com',
       name: 'S.A. Rodrig',
       password: bycriptjs.hashSync('123456', 10),
       role: 'admin',
     },
     {
-      email: 'scrodrig1',
+      email: 'scrodrig1@mail.com',
       name: 'S.U. Rodrig1',
       password: bycriptjs.hashSync('123456', 10),
       role: 'user',
