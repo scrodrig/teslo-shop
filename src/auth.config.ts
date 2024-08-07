@@ -41,7 +41,7 @@ export const authConfig: NextAuthConfig = {
         //If the user is found, return the user object
 
         const { password: _, ...rest } = user
-        console.log("🚀 ~ authorize ~ rest:", rest)
+        console.log('🚀 ~ authorize ~ rest:', rest)
 
         return rest
       },
@@ -49,4 +49,4 @@ export const authConfig: NextAuthConfig = {
   ],
 }
 
-export const { signIn, signOut, auth } = NextAuth(authConfig)
+export const { signIn, signOut, auth, handlers } = NextAuth(authConfig)
