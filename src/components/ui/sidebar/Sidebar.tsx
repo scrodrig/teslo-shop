@@ -14,11 +14,16 @@ import {
 import Link from 'next/link'
 import clsx from 'clsx'
 import { logout } from '@/actions'
+import { useSession } from 'next-auth/react'
 import { useUiStore } from '@/store'
 
 export const Sidebar = () => {
   const isSideMenuOpen = useUiStore((state) => state.isSideMenuOpen)
   const closeMenu = useUiStore((state) => state.closeSideMenu)
+
+  const { data: session } = useSession()
+
+  const isAuthenticated = !!session?.user
 
   return (
     <div>
@@ -71,21 +76,26 @@ export const Sidebar = () => {
           <span className="ml-3 text-xl">Orders</span>
         </Link>
 
-        <Link
-          href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all">
-          <IoLogInOutline size={30} />
-          <span className="ml-3 text-xl">Sign In</span>
-        </Link>
+        {isAuthenticated && (
+          <button
+            className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+            onClick={() => {
+              logout(), closeMenu()
+            }}>
+            <IoLogOutOutline size={30} />
+            <span className="ml-3 text-xl">Logout</span>
+          </button>
+        )}
 
-        <button
-          className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-          onClick={() => {
-            logout()
-          }}>
-          <IoLogOutOutline size={30} />
-          <span className="ml-3 text-xl">Logout</span>
-        </button>
+        {!isAuthenticated && (
+          <Link
+            href="/auth/login"
+            onClick={() => closeMenu()}
+            className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all">
+            <IoLogInOutline size={30} />
+            <span className="ml-3 text-xl">Sign In</span>
+          </Link>
+        )}
 
         {/*Line separator*/}
         <div className="w-full h-px bg-gray-200 my-10" />
