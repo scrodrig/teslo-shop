@@ -1,6 +1,7 @@
 import './globals.css'
 
 import type { Metadata } from 'next'
+import { Provider } from '@/components'
 import { inter } from '@/config/fonts'
 
 export const metadata: Metadata = {
@@ -19,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true} className={inter.className}>
-        {children}
+        <Provider>{children}</Provider>
       </body>
     </html>
   )
