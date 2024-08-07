@@ -5,16 +5,21 @@ import prisma from "../lib/prisma";
 async function main() {
   //? Delete data
   // await Promise.all([
-  await prisma.productImage.deleteMany();
-  await prisma.product.deleteMany();
-  await prisma.category.deleteMany();
+    await prisma.productImage.deleteMany();
+    await prisma.product.deleteMany();
+    await prisma.category.deleteMany();
+    await prisma.user.deleteMany();
   // ]);
 
   //? Add a category
 
-  const { categories, products } = initialData;
+  const { categories, products, users } = initialData;
 
   const categoriesData = categories.map((category) => ({ name: category }));
+
+  await prisma.user.createMany({
+    data: users,
+  });
 
   await prisma.category.createMany({
     data: categoriesData,
@@ -26,7 +31,6 @@ async function main() {
     map[category.name.toLowerCase()] = category.id;
     return map;
   }, {} as Record<string, string>);
-  console.log("🚀 ~ categoriesMap ~ categoriesMap:", categoriesMap);
 
 
   products.forEach(async (product) => {
