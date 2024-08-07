@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import {
   IoCloseOutline,
@@ -9,15 +9,15 @@ import {
   IoSearchOutline,
   IoShareOutline,
   IoTicketOutline,
-} from "react-icons/io5";
+} from 'react-icons/io5'
 
-import Link from "next/link";
-import clsx from "clsx";
-import { useUiStore } from "@/store";
+import Link from 'next/link'
+import clsx from 'clsx'
+import { useUiStore } from '@/store'
 
 export const Sidebar = () => {
-  const isSideMenuOpen = useUiStore((state) => state.isSideMenuOpen);
-  const closeMenu = useUiStore((state) => state.closeSideMenu);
+  const isSideMenuOpen = useUiStore((state) => state.isSideMenuOpen)
+  const closeMenu = useUiStore((state) => state.closeSideMenu)
 
   return (
     <div>
@@ -30,16 +30,14 @@ export const Sidebar = () => {
       {isSideMenuOpen && (
         <div
           className="fade-in fixed top-0 left-0 w-screen h-screen z-10 backdrop-filter backdrop-blur-sm"
-          onClick={() => closeMenu()}
-        ></div>
+          onClick={() => closeMenu()}></div>
       )}
       {/* Sidebar */}
       <nav
         className={clsx(
-          "fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300",
-          { "translate-x-full": !isSideMenuOpen }
-        )}
-      >
+          'fixed p-5 right-0 top-0 w-[500px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300',
+          { 'translate-x-full': !isSideMenuOpen }
+        )}>
         <IoCloseOutline
           size={50}
           className="absolute top-5 right-5 cursor-pointer"
@@ -58,33 +56,30 @@ export const Sidebar = () => {
         {/*Menu*/}
 
         <Link
-          href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-        >
+          href="/profile"
+          onClick={() => closeMenu()}
+          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all">
           <IoPersonOutline size={30} />
-          <span className="ml-3 text-xl">Perfil</span>
+          <span className="ml-3 text-xl">Profile</span>
         </Link>
 
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-        >
+          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all">
           <IoTicketOutline size={30} />
           <span className="ml-3 text-xl">Orders</span>
         </Link>
 
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-        >
+          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all">
           <IoLogInOutline size={30} />
           <span className="ml-3 text-xl">Sign In</span>
         </Link>
 
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-        >
+          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all">
           <IoLogOutOutline size={30} />
           <span className="ml-3 text-xl">Logout</span>
         </Link>
@@ -94,28 +89,25 @@ export const Sidebar = () => {
 
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-        >
+          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all">
           <IoShareOutline size={30} />
           <span className="ml-3 text-xl">Products</span>
         </Link>
 
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-        >
+          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all">
           <IoTicketOutline size={30} />
           <span className="ml-3 text-xl">Orders</span>
         </Link>
 
         <Link
           href="/"
-          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-        >
+          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all">
           <IoPeopleOutline size={30} />
           <span className="ml-3 text-xl">Users</span>
         </Link>
       </nav>
     </div>
-  );
-};
+  )
+}
