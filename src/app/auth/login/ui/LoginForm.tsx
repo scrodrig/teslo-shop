@@ -22,6 +22,7 @@ export const LoginForm = () => {
   useEffect(() => {
     if (state === 'Success') {
       router.replace('/')
+      // window.location.replace('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
