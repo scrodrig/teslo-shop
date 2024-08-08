@@ -8,7 +8,6 @@ import Link from 'next/link'
 import { authenticate } from '@/actions'
 import clsx from 'clsx'
 import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 
 export const LoginForm = () => {
   // const [errorMessage, formAction, isPending] = useActionState(
@@ -17,12 +16,12 @@ export const LoginForm = () => {
   // );
 
   const [state, dispatch] = useFormState(authenticate, undefined)
-  const router = useRouter()
+  // const router = useRouter()
 
   useEffect(() => {
     if (state === 'Success') {
-      router.replace('/')
-      // window.location.replace('/');
+      // router.replace('/')
+      window.location.replace('/')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
