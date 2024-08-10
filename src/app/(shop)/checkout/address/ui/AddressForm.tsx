@@ -1,8 +1,9 @@
 'use client'
 
+import { deleteUserAddress, setUserAddress } from '@/actions'
+
 import { Country } from '@/interfaces'
 import clsx from 'clsx'
-import { setUserAddress } from '@/actions'
 import { useAddressStore } from '@/store'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
@@ -61,6 +62,7 @@ export const AddressForm = ({ countries }: Props) => {
       setUserAddress(rest, session!.user.id)
     } else {
       // Remove address from database
+      deleteUserAddress(session!.user.id)
     }
   }
 
