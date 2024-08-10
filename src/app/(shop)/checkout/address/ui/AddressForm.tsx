@@ -38,9 +38,7 @@ export const AddressForm = ({ countries }: Props) => {
   const address = useAddressStore((state) => state.getAddress())
 
   useEffect(() => {
-    console.log("🚀 ~ before useEffect ~ address:", address)
     if (address.firstName) {
-      console.log("🚀 ~ useEffect ~ address:", address)
       reset(address)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
