@@ -1,8 +1,8 @@
 'use client'
 
+import { Address, Country } from '@/interfaces'
 import { deleteUserAddress, setUserAddress } from '@/actions'
 
-import { Country } from '@/interfaces'
 import clsx from 'clsx'
 import { useAddressStore } from '@/store'
 import { useEffect } from 'react'
@@ -23,9 +23,10 @@ interface FormInputs {
 
 interface Props {
   countries: Country[]
+  userStoreAddress?: Partial<Address>
 }
 
-export const AddressForm = ({ countries }: Props) => {
+export const AddressForm = ({ countries, userStoreAddress = {} }: Props) => {
   const {
     handleSubmit,
     register,
@@ -34,6 +35,8 @@ export const AddressForm = ({ countries }: Props) => {
   } = useForm<FormInputs>({
     defaultValues: {
       // TODO: From database
+      ...(userStoreAddress as any),
+      rememberAddress: true,
     },
   })
 
