@@ -2,6 +2,8 @@
 
 import { Country } from '@/interfaces'
 import clsx from 'clsx'
+import { useAddressStore } from '@/store'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 interface FormInputs {
@@ -25,14 +27,28 @@ export const AddressForm = ({ countries }: Props) => {
     handleSubmit,
     register,
     formState: { isValid },
+    reset,
   } = useForm<FormInputs>({
     defaultValues: {
-      // From database
+      // TODO: From database
     },
   })
 
+  const setAddress = useAddressStore((state) => state.setAddress)
+  const address = useAddressStore((state) => state.getAddress())
+
+  useEffect(() => {
+    console.log("🚀 ~ before useEffect ~ address:", address)
+    if (address.firstName) {
+      console.log("🚀 ~ useEffect ~ address:", address)
+      reset(address)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const onSubmit = (data: FormInputs) => {
-    console.log(data)
+    console.log({ data })
+    setAddress(data)
   }
 
   return (
@@ -42,7 +58,6 @@ export const AddressForm = ({ countries }: Props) => {
       <div className="flex flex-col mb-2">
         <span>Names</span>
         <input
-          autoFocus
           type="text"
           className="p-2 border rounded-md bg-gray-200"
           {...register('firstName', { required: true })}
