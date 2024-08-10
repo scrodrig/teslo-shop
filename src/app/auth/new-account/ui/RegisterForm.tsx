@@ -3,6 +3,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Link from 'next/link'
+import clsx from 'clsx'
 
 type FormInputs = {
   name: string
@@ -29,13 +30,15 @@ export const RegisterForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-      {errors.name?.type === 'required' && (
+      {/* {errors.name?.type === 'required' && (
         <span className="text-red-500">* This field is required</span>
-      )}
+      )} */}
 
       <label htmlFor="email">Full name</label>
       <input
-        className="px-5 py-2 border bg-gray-200 rounded mb-5"
+        className={clsx('px-5 py-2 border bg-gray-200 rounded mb-5', {
+          'border-red-500': errors.name,
+        })}
         type="text"
         autoFocus
         {...register('name', { required: true })}
@@ -43,16 +46,20 @@ export const RegisterForm = () => {
 
       <label htmlFor="email">Email</label>
       <input
-        className="px-5 py-2 border bg-gray-200 rounded mb-5"
+        className={clsx('px-5 py-2 border bg-gray-200 rounded mb-5', {
+          'border-red-500': errors.email,
+        })}
         type="email"
         {...register('email', { required: true, pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g })}
       />
 
       <label htmlFor="password">Password</label>
       <input
-        className="px-5 py-2 border bg-gray-200 rounded mb-5"
+        className={clsx('px-5 py-2 border bg-gray-200 rounded mb-5', {
+          'border-red-500': errors.password,
+        })}
         type="password"
-        {...register('password')}
+        {...register('password', { required: true, minLength: 6 })}
       />
 
       <button className="btn-primary">Create Account</button>
