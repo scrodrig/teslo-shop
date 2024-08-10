@@ -1,7 +1,9 @@
 'use client'
 
+import { Country } from '@/interfaces'
 import Link from 'next/link'
 import clsx from 'clsx'
+import { countries } from '../../../../../seed/seed-countries'
 import { useForm } from 'react-hook-form'
 
 interface FormInputs {
@@ -16,7 +18,11 @@ interface FormInputs {
   rememberAddress: boolean
 }
 
-export const AddressForm = () => {
+interface Props {
+  countries: Country[]
+}
+
+export const AddressForm = ({ countries }: Props) => {
   const {
     handleSubmit,
     register,
@@ -96,7 +102,11 @@ export const AddressForm = () => {
           className="p-2 border rounded-md bg-gray-200"
           {...register('country', { required: true })}>
           <option value="">[ Select ]</option>
-          <option value="PT">Portugal</option>
+          {countries.map((country) => (
+            <option key={country.id} value={country.id}>
+              {country.name}
+            </option>
+          ))}
         </select>
       </div>
 
