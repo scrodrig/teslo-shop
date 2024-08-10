@@ -2,9 +2,11 @@
 
 import { Country } from '@/interfaces'
 import clsx from 'clsx'
+import { setUserAddress } from '@/actions'
 import { useAddressStore } from '@/store'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSession } from 'next-auth/react'
 
 interface FormInputs {
   firstName: string
@@ -34,6 +36,10 @@ export const AddressForm = ({ countries }: Props) => {
     },
   })
 
+  const { data: session } = useSession({
+    required: true,
+  })
+
   const setAddress = useAddressStore((state) => state.setAddress)
   const address = useAddressStore((state) => state.getAddress())
 
@@ -41,12 +47,21 @@ export const AddressForm = ({ countries }: Props) => {
     if (address.firstName) {
       reset(address)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onSubmit = (data: FormInputs) => {
     console.log({ data })
     setAddress(data)
+
+    const { rememberAddress, ...rest } = data
+
+    if (rememberAddress) {
+      // Save address to database
+      setUserAddress(rest, session!.user.id)
+    } else {
+      // Remove address from database
+    }
   }
 
   return (
