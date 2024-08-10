@@ -6,6 +6,7 @@ import prisma from '../lib/prisma'
 async function main() {
   //? Delete data
   // await Promise.all([
+  await prisma.userAddress.deleteMany()
   await prisma.country.deleteMany()
   await prisma.productImage.deleteMany()
   await prisma.product.deleteMany()
