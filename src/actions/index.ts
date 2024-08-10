@@ -10,6 +10,7 @@ import { getCountry } from './country/get-country'
 import { getPaginatedProductsWithImages } from './product/get-product-pagination'
 import { getProductbySlug } from './product/get-product-by-slug'
 import { getStockBySlug } from './product/get-stock-by-slug'
+import { getUserAddress } from './address/get-user-address'
 import { logout } from './auth/logout'
 import { registerUser } from './auth/register'
 import { setUserAddress } from './address/set-user-address'
@@ -24,4 +25,5 @@ export {
   getCountry,
   setUserAddress,
   deleteUserAddress,
+  getUserAddress,
 }
