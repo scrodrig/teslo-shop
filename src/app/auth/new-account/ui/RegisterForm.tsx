@@ -4,6 +4,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Link from 'next/link'
 import clsx from 'clsx'
+import { registerUser } from '@/actions'
+import { useState } from 'react'
 
 type FormInputs = {
   name: string
@@ -12,6 +14,7 @@ type FormInputs = {
 }
 
 export const RegisterForm = () => {
+  const [errorMessage, setErrorMessage] = useState('')
   const {
     register,
     handleSubmit,
@@ -20,22 +23,21 @@ export const RegisterForm = () => {
 
   // const onSubmit = async (data: FormInputs) => {
   const onSubmit: SubmitHandler<FormInputs> = async (data: FormInputs) => {
+    setErrorMessage('')
     const { name, email, password } = data
-    console.log('🚀 ~ constonSubmit:SubmitHandler<FormInputs>= ~ { name, email, password }:', {
-      name,
-      email,
-      password,
-    })
-
     //Server action
+    const resp = await registerUser(email, password, name)
+
+    if (resp.status !== 'success') {
+      setErrorMessage(resp.message)
+      return
+    }
+
+    console.log('🚀 ~ constonSubmit:SubmitHandler<FormInputs>= ~ resp:', resp)
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-      {/* {errors.name?.type === 'required' && (
-        <span className="text-red-500">* This field is required</span>
-      )} */}
-
       <label htmlFor="email">Full name</label>
       <input
         className={clsx('px-5 py-2 border bg-gray-200 rounded mb-5', {
@@ -63,6 +65,8 @@ export const RegisterForm = () => {
         type="password"
         {...register('password', { required: true, minLength: 6 })}
       />
+
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
       <button className="btn-primary">Create Account</button>
 
