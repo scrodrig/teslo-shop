@@ -1,9 +1,7 @@
 'use client'
 
 import { Country } from '@/interfaces'
-import Link from 'next/link'
 import clsx from 'clsx'
-import { countries } from '../../../../../seed/seed-countries'
 import { useForm } from 'react-hook-form'
 
 interface FormInputs {
