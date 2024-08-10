@@ -9,5 +9,13 @@ import { getPaginatedProductsWithImages } from './product/get-product-pagination
 import { getProductbySlug } from './product/get-product-by-slug'
 import { getStockBySlug } from './product/get-stock-by-slug'
 import { logout } from './auth/logout'
+import { registerUser } from './auth/register'
 
-export { getPaginatedProductsWithImages, getProductbySlug, getStockBySlug, authenticate, logout }
+export {
+  getPaginatedProductsWithImages,
+  getProductbySlug,
+  getStockBySlug,
+  authenticate,
+  logout,
+  registerUser,
+}
