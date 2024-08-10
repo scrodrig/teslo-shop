@@ -7,6 +7,7 @@ import clsx from 'clsx'
 import { useAddressStore } from '@/store'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 
 interface FormInputs {
@@ -27,6 +28,9 @@ interface Props {
 }
 
 export const AddressForm = ({ countries, userStoreAddress = {} }: Props) => {
+  
+  const router = useRouter()
+
   const {
     handleSubmit,
     register,
@@ -54,19 +58,21 @@ export const AddressForm = ({ countries, userStoreAddress = {} }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const onSubmit = (data: FormInputs) => {
-    console.log({ data })
+  const onSubmit = async (data: FormInputs) => {
     setAddress(data)
 
     const { rememberAddress, ...rest } = data
 
     if (rememberAddress) {
       // Save address to database
-      setUserAddress(rest, session!.user.id)
+      await setUserAddress(rest, session!.user.id)
     } else {
       // Remove address from database
-      deleteUserAddress(session!.user.id)
+      await deleteUserAddress(session!.user.id)
     }
+
+    router.push('/checkout')
+
   }
 
   return (
