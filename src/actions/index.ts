@@ -5,6 +5,7 @@
 // 'use server'
 
 import { authenticate } from './auth/login'
+import { deleteUserAddress } from './address/delete-user-address'
 import { getCountry } from './country/get-country'
 import { getPaginatedProductsWithImages } from './product/get-product-pagination'
 import { getProductbySlug } from './product/get-product-by-slug'
@@ -22,4 +23,5 @@ export {
   registerUser,
   getCountry,
   setUserAddress,
+  deleteUserAddress,
 }
