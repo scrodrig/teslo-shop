@@ -6,7 +6,7 @@ interface State {
     firstName: string
     lastName: string
     address: string
-    address2: string
+    address2?: string
     zipCode: string
     city: string
     country: string
@@ -15,6 +15,7 @@ interface State {
 
   //methods
   setAddress: (address: State['address']) => void
+  getAddress: () => State['address']
 }
 
 export const useAddressStore = create<State>()(
@@ -32,6 +33,10 @@ export const useAddressStore = create<State>()(
         phone: '',
       },
       setAddress: (address) => set({ address }),
+      getAddress: () => {
+        const { address } = get()
+        return address
+      },
     }),
     {
       name: 'address-storage',
