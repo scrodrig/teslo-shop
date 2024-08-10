@@ -26,6 +26,8 @@ export const RegisterForm = () => {
       email,
       password,
     })
+
+    //Server action
   }
 
   return (
