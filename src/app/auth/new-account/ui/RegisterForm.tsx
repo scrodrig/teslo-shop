@@ -4,7 +4,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import Link from 'next/link'
 import clsx from 'clsx'
+import { login } from '@/actions/auth/login'
 import { registerUser } from '@/actions'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 type FormInputs = {
@@ -15,6 +17,7 @@ type FormInputs = {
 
 export const RegisterForm = () => {
   const [errorMessage, setErrorMessage] = useState('')
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -33,7 +36,13 @@ export const RegisterForm = () => {
       return
     }
 
-    console.log('🚀 ~ constonSubmit:SubmitHandler<FormInputs>= ~ resp:', resp)
+    //Server action for login
+    await login(email.toLowerCase(), password)
+
+    //Redirect to dashboard
+    // router.replace('/')
+    ///OR:
+    window.location.href = '/'
   }
 
   return (
