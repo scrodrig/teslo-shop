@@ -5,12 +5,13 @@
 // 'use server'
 
 import { authenticate } from './auth/login'
-import { getCountry } from './country/get-country';
+import { getCountry } from './country/get-country'
 import { getPaginatedProductsWithImages } from './product/get-product-pagination'
 import { getProductbySlug } from './product/get-product-by-slug'
 import { getStockBySlug } from './product/get-stock-by-slug'
 import { logout } from './auth/logout'
 import { registerUser } from './auth/register'
+import { setUserAddress } from './address/set-user-address'
 
 export {
   getPaginatedProductsWithImages,
@@ -19,5 +20,6 @@ export {
   authenticate,
   logout,
   registerUser,
-  getCountry
+  getCountry,
+  setUserAddress,
 }
