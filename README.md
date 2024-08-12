@@ -12,3 +12,4 @@
 6. Run seed `npm run seed`
 7. Run `npm run dev`
 8. Open `http://localhost:3000` in your browser
+9. Clean local storage in your browser
