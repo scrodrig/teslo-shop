@@ -1,14 +1,7 @@
-import { QuantitySelector, Title } from "@/components";
-
-import Image from "next/image";
-import Link from "next/link";
-import { initialData } from "@/seed/seed";
-
-const productsInCart = [
-  initialData.products[0],
-  initialData.products[1],
-  initialData.products[2],
-];
+import Image from 'next/image'
+import Link from 'next/link'
+import { ProductsInCart } from './ui/ProductsInCart'
+import { Title } from '@/components'
 
 export default function CheckoutPage() {
   return (
@@ -23,23 +16,7 @@ export default function CheckoutPage() {
               Edit shopping cart
             </Link>
             {/* Product list */}
-            {productsInCart.map((product) => (
-              <div key={product.slug} className="flex">
-                <Image
-                  src={`/products/${product.images[0]}`}
-                  alt={product.title}
-                  width={100}
-                  height={100}
-                  className="mr-5 rounded"
-                  style={{ width: "100px", height: "100px" }}
-                />
-                <div>
-                  <p>{product.title}</p>
-                  <p>${product.price}</p>
-                  <p className="font-bold">Subtotal: ${product.price}</p>
-                </div>
-              </div>
-            ))}
+            <ProductsInCart />
           </div>
           {/* Checkout */}
           <div className="bg-white rounded-xl shadow-xl p-7">
@@ -72,14 +49,13 @@ export default function CheckoutPage() {
 
             <p className="text-xs">
               {`By clicking on Place Order" you agree to our `}
-              <Link href="#" className="underline">terms and conditions</Link>
+              <Link href="#" className="underline">
+                terms and conditions
+              </Link>
             </p>
 
             <div className="mt-5 mb-2 w-full">
-              <Link
-                href="/orders/123"
-                className="flex justify-center btn-primary"
-              >
+              <Link href="/orders/123" className="flex justify-center btn-primary">
                 Place Order
               </Link>
             </div>
@@ -87,5 +63,5 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
