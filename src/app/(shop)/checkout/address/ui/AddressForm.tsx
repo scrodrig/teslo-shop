@@ -59,9 +59,9 @@ export const AddressForm = ({ countries, userStoreAddress = {} }: Props) => {
   }, [])
 
   const onSubmit = async (data: FormInputs) => {
-    setAddress(data)
-
+    
     const { rememberAddress, ...rest } = data
+    setAddress(rest)
 
     if (rememberAddress) {
       // Save address to database
