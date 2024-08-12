@@ -3,6 +3,7 @@
 import type { Address, Size } from '@/interfaces'
 
 import { auth } from '@/auth.config'
+import prisma from '@/lib/prisma'
 
 interface ProductsInOrder {
   productId: string
@@ -15,8 +16,20 @@ export const placeOrder = async (productsId: ProductsInOrder[], address: Address
 
   const userId = session?.user.id
 
-  console.log('🚀 ~ placeOrder ~ productsId:', productsId)
-  console.log('🚀 ~ placeOrder ~ address:', address)
+
+  const products = await prisma.product.findMany({
+    where: {
+      id: {
+        in: productsId.map((product) => product.productId),
+      },
+    },
+  })
+
+
+  const itemsInOrder = productsId.reduce((count, product) => count + product.quantity, 0)
+  console.log("🚀 ~ placeOrder ~ itemsInOrder:", itemsInOrder)
+
+
 
   if (!userId) {
     return {
