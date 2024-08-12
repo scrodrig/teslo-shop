@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
 import clsx from 'clsx'
+import { placeOrder } from '@/actions'
 
 export const PlaceOrder = () => {
   const [loaded, setLoaded] = useState(false)
@@ -37,7 +38,11 @@ export const PlaceOrder = () => {
       size: product.size,
     }))
 
-    console.log('address', {address}, {productsToOrder})
+    
+    const response = await placeOrder(productsToOrder, address)
+    
+    console.log("🚀 ~ onPlaceOrder ~ response:", response)
+    
 
     setIsPlacingOrder(false)
   }
