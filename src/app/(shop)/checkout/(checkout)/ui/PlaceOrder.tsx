@@ -1,15 +1,18 @@
 'use client'
 
+import { currencyFormater, sleep } from '@/utils'
 import { useAddressStore, useCartStore } from '@/store'
 import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
-import { currencyFormater } from '@/utils'
+import clsx from 'clsx'
 
 export const PlaceOrder = () => {
   const [loaded, setLoaded] = useState(false)
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false)
 
   const address = useAddressStore((state) => state.address)
+  const cart = useCartStore((state) => state.cart)
 
   const { subTotal, tax, totalItems, totalPrice } = useCartStore((state) =>
     state.getSummaryInformation()
@@ -21,6 +24,22 @@ export const PlaceOrder = () => {
 
   if (!loaded) {
     return <div>Loading...</div>
+  }
+
+
+  const onPlaceOrder = async () => {
+    setIsPlacingOrder(true)
+    //Todo: Create an order
+    
+    const productsToOrder = cart.map((product) => ({
+      productId: product.id,
+      quantity: product.quantity,
+      size: product.size,
+    }))
+
+    console.log('address', {address}, {productsToOrder})
+
+    setIsPlacingOrder(false)
   }
 
   return (
@@ -63,8 +82,17 @@ export const PlaceOrder = () => {
         </Link>
       </p>
 
+      {/* <p className='text-red-500'>Error creating an order</p> */}
+
       <div className="mt-5 mb-2 w-full">
-        <button className="flex justify-center btn-primary">Place Order</button>
+        <button
+          onClick={onPlaceOrder}
+          className={clsx('flex justify-center', {
+            'btn-primary': !isPlacingOrder,
+            'btn-disabled': isPlacingOrder,
+          })}>
+          Place Order
+        </button>
       </div>
     </div>
   )
