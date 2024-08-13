@@ -7,13 +7,19 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import clsx from 'clsx'
 import { placeOrder } from '@/actions'
+import { useRouter } from 'next/navigation'
 
 export const PlaceOrder = () => {
+
+  const router = useRouter()
+
   const [loaded, setLoaded] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   const [isPlacingOrder, setIsPlacingOrder] = useState(false)
 
   const address = useAddressStore((state) => state.address)
   const cart = useCartStore((state) => state.cart)
+  const clearCart = useCartStore((state) => state.clearCart)
 
   const { subTotal, tax, totalItems, totalPrice } = useCartStore((state) =>
     state.getSummaryInformation()
@@ -40,11 +46,20 @@ export const PlaceOrder = () => {
 
     
     const response = await placeOrder(productsToOrder, address)
-    
     console.log("🚀 ~ onPlaceOrder ~ response:", response)
     
+    if(!response.success){
+      setIsPlacingOrder(false)
+      setErrorMessage(response.message ?? '')
+      return
+    }
 
-    setIsPlacingOrder(false)
+    // To this point, the order was created successfully
+    clearCart()
+
+    router.replace(`/orders/${response.order?.id}`)
+    
+
   }
 
   return (
@@ -87,7 +102,7 @@ export const PlaceOrder = () => {
         </Link>
       </p>
 
-      {/* <p className='text-red-500'>Error creating an order</p> */}
+      <p className='text-red-500'>{errorMessage}</p>
 
       <div className="mt-5 mb-2 w-full">
         <button
