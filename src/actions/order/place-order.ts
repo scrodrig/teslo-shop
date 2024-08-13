@@ -53,7 +53,7 @@ export const placeOrder = async (productsId: ProductsInOrder[], address: Address
     { subTotal: 0, tax: 0, totalPrice: 0 }
   )
 
-  console.log('🚀 ~ placeOrder ~ subTotal, totalPrice, tax :', subTotal, totalPrice, tax)
+  // console.log('🚀 ~ placeOrder ~ subTotal, totalPrice, tax :', subTotal, totalPrice, tax)
   //! Transaction to create an order https://www.prisma.io/docs/orm/prisma-client/queries/transactions#interactive-transactions
   try {
     const prismaTx = await prisma.$transaction(async (tx) => {
@@ -109,6 +109,7 @@ export const placeOrder = async (productsId: ProductsInOrder[], address: Address
       })
       //? Verify if price is zero
       // Create order address
+      console.log("🚀 ~ prismaTx ~ order:", order)
       const { country, ...restAddress } = address
 
       const orderAddress = await tx.orderAddress.create({
