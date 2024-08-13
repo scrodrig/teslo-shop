@@ -14,6 +14,7 @@ interface State {
     totalPrice: number
     tax: number
   }
+  clearCart: () => void
 }
 
 export const useCartStore = create<State>()(
@@ -86,6 +87,9 @@ export const useCartStore = create<State>()(
 
         return { totalItems, subTotal, tax, totalPrice }
       },
+      clearCart: () => {
+        set({ cart: [] })
+      }
     }),
     {
       name: 'shopping-cart',
