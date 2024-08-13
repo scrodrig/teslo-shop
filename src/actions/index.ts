@@ -7,6 +7,7 @@
 import { authenticate } from './auth/login'
 import { deleteUserAddress } from './address/delete-user-address'
 import { getCountry } from './country/get-country'
+import { getOrderByID } from './order/get-order-by-id';
 import { getPaginatedProductsWithImages } from './product/get-product-pagination'
 import { getProductbySlug } from './product/get-product-by-slug'
 import { getStockBySlug } from './product/get-stock-by-slug'
@@ -27,5 +28,6 @@ export {
   setUserAddress,
   deleteUserAddress,
   getUserAddress,
-  placeOrder
+  placeOrder,
+  getOrderByID
 }
