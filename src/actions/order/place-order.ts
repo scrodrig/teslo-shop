@@ -16,7 +16,6 @@ export const placeOrder = async (productsId: ProductsInOrder[], address: Address
 
   const userId = session?.user.id
 
-
   const products = await prisma.product.findMany({
     where: {
       id: {
@@ -25,11 +24,30 @@ export const placeOrder = async (productsId: ProductsInOrder[], address: Address
     },
   })
 
+  const itemsInOrder = productsId.reduce((count, item) => count + item.quantity, 0)
+  const { subTotal, totalPrice, tax } = productsId.reduce(
+    (totals, item) => {
+      const productQuantity = item.quantity
+      const product = products.find((product) => product.id === item.productId)
 
-  const itemsInOrder = productsId.reduce((count, product) => count + product.quantity, 0)
-  console.log("🚀 ~ placeOrder ~ itemsInOrder:", itemsInOrder)
+      if (!product) {
+        return { subTotal: 0, tax: 0, totalPrice: 0 }
+      }
 
+      const subTotal = product.price * productQuantity
+      totals.subTotal += subTotal
 
+      totals.tax += subTotal * 0.23
+
+      totals.totalPrice += subTotal + totals.tax
+
+      return totals
+    },
+    { subTotal: 0, tax: 0, totalPrice: 0 }
+  )
+
+  
+  console.log('🚀 ~ placeOrder ~ subTotal, totalPrice, tax :', subTotal, totalPrice, tax)
 
   if (!userId) {
     return {
