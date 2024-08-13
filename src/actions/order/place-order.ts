@@ -16,6 +16,13 @@ export const placeOrder = async (productsId: ProductsInOrder[], address: Address
 
   const userId = session?.user.id
 
+  if (!userId) {
+    return {
+      success: false,
+      message: 'User not found',
+    }
+  }
+
   const products = await prisma.product.findMany({
     where: {
       id: {
@@ -46,15 +53,24 @@ export const placeOrder = async (productsId: ProductsInOrder[], address: Address
     { subTotal: 0, tax: 0, totalPrice: 0 }
   )
 
-  
   console.log('🚀 ~ placeOrder ~ subTotal, totalPrice, tax :', subTotal, totalPrice, tax)
 
-  if (!userId) {
+  //! Transaction to create an order https://www.prisma.io/docs/orm/prisma-client/queries/transactions#interactive-transactions
+
+  const prismaTx = await prisma.$transaction(async (tx) => {
+    // Update stock
+    // Create order header - details
+    // Create order address
+
+    //Return order
+
     return {
-      success: false,
-      message: 'User not found',
+      order: 123,
+      updatedProducts: [],
+      orderAddress: {},
     }
-  }
+
+  })
 
   return {
     success: false,
