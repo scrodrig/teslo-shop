@@ -54,54 +54,92 @@ export const placeOrder = async (productsId: ProductsInOrder[], address: Address
   )
 
   console.log('🚀 ~ placeOrder ~ subTotal, totalPrice, tax :', subTotal, totalPrice, tax)
-
   //! Transaction to create an order https://www.prisma.io/docs/orm/prisma-client/queries/transactions#interactive-transactions
+  try {
+    const prismaTx = await prisma.$transaction(async (tx) => {
+      // Update stock
 
-  const prismaTx = await prisma.$transaction(async (tx) => {
-    // Update stock
-    // Create order header - details
-    const order = await tx.order.create({
-      data: {
-        userId,
-        totalItems: itemsInOrder,
-        subTotal,
-        totalPrice,
-        tax,
-        OrderItem: {
-          createMany: {
-            data: productsId.map((product) => ({
-              productId: product.productId,
-              quantity: product.quantity,
-              size: product.size,
-              price: products.find((p) => p.id === product.productId)?.price ?? 0,
-            })),
+      const updatedProductsPromises = products.map((product) => {
+        // Acc values
+        const productQuantity = productsId
+          .filter((p) => p.productId === product.id)
+          .reduce((acc, item) => acc + item.quantity, 0)
+        if (productQuantity === 0) throw new Error('Product quantity is not defined')
+
+        return tx.product.update({
+          where: { id: product.id },
+          data: {
+            // inStock: product.inStock - productQuantity, //Not to do
+            inStock: {
+              decrement: productQuantity,
+            },
+          },
+        })
+      })
+
+      const updatedProducts = await Promise.all(updatedProductsPromises)
+
+      //Check negative values in stock
+
+      updatedProducts.forEach((product) => {
+        if (product.inStock < 0) {
+          throw new Error(`Product ${product.title} out of stock`)
+        }
+      })
+
+      // Create order header - details
+      const order = await tx.order.create({
+        data: {
+          userId,
+          totalItems: itemsInOrder,
+          subTotal,
+          totalPrice,
+          tax,
+          OrderItem: {
+            createMany: {
+              data: productsId.map((product) => ({
+                productId: product.productId,
+                quantity: product.quantity,
+                size: product.size,
+                price: products.find((p) => p.id === product.productId)?.price ?? 0,
+              })),
+            },
           },
         },
-      },
-    })
-    //? Verify if price is zero
-    // Create order address
-    const {country, ...restAddress} = address
+      })
+      //? Verify if price is zero
+      // Create order address
+      const { country, ...restAddress } = address
 
-    const orderAddress = await tx.orderAddress.create({
-      data: {
-        ...restAddress,
-        countryId: country,
-        orderId: order.id,
-      },
-    })
+      const orderAddress = await tx.orderAddress.create({
+        data: {
+          ...restAddress,
+          countryId: country,
+          orderId: order.id,
+        },
+      })
 
-    //Return order
+      //? Update products stock
+
+      //Return order
+
+      return {
+        order: order,
+        updatedProducts: updatedProducts,
+        orderAddress: orderAddress,
+      }
+    })
 
     return {
-      order: order,
-      updatedProducts: [],
-      orderAddress: orderAddress,
+      success: true,
+      order: prismaTx.order,
+      prismaTx,
     }
-  })
 
-  return {
-    success: false,
-    message: 'Order not placed',
+  } catch (error) {
+    return {
+      success: false,
+      message: 'Order not placed',
+    }
   }
 }
