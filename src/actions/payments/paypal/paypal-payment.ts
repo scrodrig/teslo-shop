@@ -1,17 +1,43 @@
 'use server'
 
+import { PayPalOrderStatusResponse, Paypal } from '@/interfaces'
+
 export const paypalCheckPayment = async (transactionId?: string) => {
   const authToken = await getPayPalBearerToken()
-  
+
   if (!authToken) {
     return {
       success: false,
       message: 'Error getting PayPal token',
     }
   }
-  
-  console.log("🚀 ~ paypalCheckPayment ~ authToken:", authToken)
+
+  console.log('🚀 ~ paypalCheckPayment ~ authToken:', authToken)
   console.log('🚀 ~ paypalCheckPayment ~ transactionId:', transactionId)
+
+  const resp = await verifyPaypalPayment(transactionId, authToken)
+
+  if (!resp) {
+    return {
+      success: false,
+      message: 'Error verifying PayPal payment',
+    }
+  }
+
+  const { status, payer, purchase_units } = resp
+  console.log('🚀 ~ paypalCheckPayment ~ status:', { status, purchase_units })
+
+
+  if(status !== 'COMPLETED'){
+    return {
+      success: false,
+      message: 'Payment not completed',
+    }
+  }
+
+  //TODO: Update our database with the payment status
+
+  // return {}
 }
 
 const getPayPalBearerToken = async (): Promise<string | null> => {
@@ -40,6 +66,30 @@ const getPayPalBearerToken = async (): Promise<string | null> => {
   try {
     const response = await fetch(oauth2Url, resultOptions).then((res) => res.json())
     return response.access_token
+  } catch (e) {
+    console.log(e)
+    return null
+  }
+}
+
+const verifyPaypalPayment = async (
+  transactionId?: string,
+  authToken?: string
+): Promise<PayPalOrderStatusResponse | null> => {
+  const paypalOrderUrl = `${process.env.PAYPAL_ORDERS_URL}/${transactionId}`
+
+  let headersList = {
+    Accept: '*/*',
+    Authorization: `Bearer ${authToken}`,
+  }
+
+  try {
+    let response = await fetch(paypalOrderUrl, {
+      method: 'GET',
+      headers: headersList,
+    }).then((res) => res.json())
+
+    return response
   } catch (e) {
     console.log(e)
     return null
