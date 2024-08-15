@@ -1,15 +1,11 @@
-import { QuantitySelector, Title } from '@/components'
-
 import Image from 'next/image'
 import { IoCartOutline } from 'react-icons/io5'
-import Link from 'next/link'
+import { PayPalButton } from '../../../../components/paypal/PayPalButton';
+import { Title } from '@/components'
 import clsx from 'clsx'
 import { currencyFormater } from '@/utils'
 import { getOrderByID } from '@/actions'
-import { initialData } from '@/seed/seed'
 import { redirect } from 'next/navigation'
-
-const productsInCart = [initialData.products[0], initialData.products[1], initialData.products[2]]
 
 interface OrdersByPageProps {
   params: {
@@ -19,7 +15,6 @@ interface OrdersByPageProps {
 
 export default async function OrdersByIdPage({ params: { id } }: OrdersByPageProps) {
   const { success, order } = await getOrderByID(id)
-  console.log('🚀 ~ getOrderByID ~ order:', order)
 
   if (!success) {
     redirect('/orders')
@@ -96,15 +91,7 @@ export default async function OrdersByIdPage({ params: { id } }: OrdersByPagePro
             </div>
 
             <div className="mt-5 mb-2 w-full">
-              <div
-                className={clsx(
-                  'flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5',
-                  { 'bg-red-500': !order?.isPaid, 'bg-green-800': order?.isPaid }
-                )}>
-                <IoCartOutline size={30} />
-                {/* <span>Payment pending</span> */}
-                <span>{order?.isPaid ? 'Payment done' : 'Payment pending'}</span>
-              </div>
+              <PayPalButton />
             </div>
           </div>
         </div>
