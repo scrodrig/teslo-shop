@@ -91,7 +91,7 @@ export default async function OrdersByIdPage({ params: { id } }: OrdersByPagePro
             </div>
 
             <div className="mt-5 mb-2 w-full">
-              <PayPalButton />
+              <PayPalButton amount={order!.totalPrice} orderId={order!.id} />
             </div>
           </div>
         </div>
