@@ -14,6 +14,7 @@ import { getProductbySlug } from './product/get-product-by-slug'
 import { getStockBySlug } from './product/get-stock-by-slug'
 import { getUserAddress } from './address/get-user-address'
 import { logout } from './auth/logout'
+import { paypalCheckPayment } from './payments/paypal/paypal-payment';
 import { placeOrder } from './order/place-order'
 import { registerUser } from './auth/register'
 import { setTransactionId } from './payments/set-transaction-id'
@@ -34,4 +35,5 @@ export {
   getOrderByID,
   getOrderByUserId,
   setTransactionId,
+  paypalCheckPayment,
 }
