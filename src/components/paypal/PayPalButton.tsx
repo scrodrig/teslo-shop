@@ -35,6 +35,7 @@ export const PayPalButton = ({ orderId, amount }: Props) => {
     const transactionId = await actions.order.create({
       purchase_units: [
         {
+          invoice_id: orderId, //? This is the order ID, unique in paypal
           amount: {
             currency_code: 'EUR',
             value: `${roundedAmount}`,
@@ -47,7 +48,6 @@ export const PayPalButton = ({ orderId, amount }: Props) => {
     const { success } = await setTransactionId(orderId, transactionId)
 
     console.log('🚀 ~ createOrder ~ transactionId:', success)
-    // if()
 
     return transactionId
   }
