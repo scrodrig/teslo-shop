@@ -11,6 +11,7 @@ import { getOrderByID } from './order/get-order-by-id'
 import { getOrderByUserId } from './order/get-orders-by-user'
 import { getPaginatedOrders } from './order/get-paginated-orders';
 import { getPaginatedProductsWithImages } from './product/get-product-pagination'
+import { getPaginatedUsers } from './user/get-paginated-users'
 import { getProductbySlug } from './product/get-product-by-slug'
 import { getStockBySlug } from './product/get-stock-by-slug'
 import { getUserAddress } from './address/get-user-address'
@@ -37,5 +38,6 @@ export {
   getOrderByUserId,
   setTransactionId,
   paypalCheckPayment,
-  getPaginatedOrders
+  getPaginatedOrders,
+  getPaginatedUsers
 }
