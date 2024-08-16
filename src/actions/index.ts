@@ -9,6 +9,7 @@ import { deleteUserAddress } from './address/delete-user-address'
 import { getCountry } from './country/get-country'
 import { getOrderByID } from './order/get-order-by-id'
 import { getOrderByUserId } from './order/get-orders-by-user'
+import { getPaginatedOrders } from './order/get-paginated-orders';
 import { getPaginatedProductsWithImages } from './product/get-product-pagination'
 import { getProductbySlug } from './product/get-product-by-slug'
 import { getStockBySlug } from './product/get-stock-by-slug'
@@ -36,4 +37,5 @@ export {
   getOrderByUserId,
   setTransactionId,
   paypalCheckPayment,
+  getPaginatedOrders
 }
