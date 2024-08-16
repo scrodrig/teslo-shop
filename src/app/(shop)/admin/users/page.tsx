@@ -17,7 +17,7 @@ export default async function UsersPage() {
       <Title title="Users administrations" />
       <div className="mb-10">
         <UsersTable users={users} />
-        <Pagination totalPages={3} />
+        <Pagination totalPages={1} />
       </div>
     </>
   )
