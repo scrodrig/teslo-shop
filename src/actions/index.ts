@@ -5,6 +5,7 @@
 // 'use server'
 
 import { authenticate } from './auth/login'
+import { changeUserRole } from './user/change-user-role'
 import { deleteUserAddress } from './address/delete-user-address'
 import { getCountry } from './country/get-country'
 import { getOrderByID } from './order/get-order-by-id'
@@ -39,5 +40,6 @@ export {
   setTransactionId,
   paypalCheckPayment,
   getPaginatedOrders,
-  getPaginatedUsers
+  getPaginatedUsers,
+  changeUserRole
 }
