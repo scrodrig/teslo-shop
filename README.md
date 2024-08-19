@@ -1,6 +1,7 @@
 # Testo shop
 
 ## Description
+E commerce shop with products, cart and orders.
 
 ## Dev run
 
