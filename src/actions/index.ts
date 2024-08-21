@@ -6,6 +6,7 @@
 
 import { authenticate } from './auth/login'
 import { changeUserRole } from './user/change-user-role'
+import { createUpdateProduct } from './product/create-update-product';
 import { deleteUserAddress } from './address/delete-user-address'
 import { getCategories } from './categories/get-categories';
 import { getCountry } from './country/get-country'
@@ -43,5 +44,6 @@ export {
   getPaginatedOrders,
   getPaginatedUsers,
   changeUserRole,
-  getCategories
+  getCategories,
+  createUpdateProduct,
 }
