@@ -6,6 +6,7 @@ import Image from 'next/image'
 import clsx from 'clsx'
 import { createUpdateProduct } from '@/actions'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   product: Partial<Product> & { ProductImage?: ProductImage[] }
@@ -27,6 +28,8 @@ interface FormInputs {
 }
 
 export const ProductForm = ({ product, categories }: Props) => {
+  const router = useRouter()
+
   const {
     handleSubmit,
     register,
@@ -69,8 +72,14 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append('categoryId', productToSave.categoryId)
     formData.append('gender', productToSave.gender)
 
-    createUpdateProduct(formData)
+    const { success, product: updatedProduct } = await createUpdateProduct(formData)
 
+    if (!success) {
+      alert('Error saving product')
+      return
+    }
+
+    router.replace(`/admin/product/${updatedProduct?.slug}`)
   }
 
   return (
@@ -155,8 +164,7 @@ export const ProductForm = ({ product, categories }: Props) => {
 
       {/* Selector de tallas y fotos */}
       <div className="w-full">
-
-      <div className="flex flex-col mb-2">
+        <div className="flex flex-col mb-2">
           <span>Stock</span>
           <input
             type="number"
@@ -173,7 +181,7 @@ export const ProductForm = ({ product, categories }: Props) => {
               // bg-blue-500 text-white <--- si está seleccionado
               <div
                 key={size}
-                onClick={()=> onSizeChange(size)}
+                onClick={() => onSizeChange(size)}
                 className={clsx(
                   'flex items-center cursor-pointer justify-center w-10 h-10 mr-2 border rounded-md',
                   {
