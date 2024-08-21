@@ -3,7 +3,6 @@
 import { Gender, Product, Size } from '@prisma/client'
 
 import prisma from '@/lib/prisma'
-import { revalidate } from '@/app/(shop)/page'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
@@ -75,6 +74,12 @@ export const createUpdateProduct = async (formData: FormData) => {
             },
           },
         })
+      }
+
+      //Upload images
+      if(formData.getAll('images')) {
+        console.log('Uploading images')
+        console.log("🚀 ~ prismaTx ~ formData.getAll('images'):", formData.getAll('images'))
       }
 
       return {
