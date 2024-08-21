@@ -1,7 +1,6 @@
 import Credentials from 'next-auth/providers/credentials'
 import NextAuth from 'next-auth'
 import type { NextAuthConfig } from 'next-auth'
-import SignUp from './app/auth/new-account/page'
 import bycriptjs from 'bcryptjs'
 import prisma from './lib/prisma'
 import { z } from 'zod'
