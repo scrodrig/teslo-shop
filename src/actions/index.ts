@@ -7,6 +7,7 @@
 import { authenticate } from './auth/login'
 import { changeUserRole } from './user/change-user-role'
 import { deleteUserAddress } from './address/delete-user-address'
+import { getCategories } from './categories/get-categories';
 import { getCountry } from './country/get-country'
 import { getOrderByID } from './order/get-order-by-id'
 import { getOrderByUserId } from './order/get-orders-by-user'
@@ -41,5 +42,6 @@ export {
   paypalCheckPayment,
   getPaginatedOrders,
   getPaginatedUsers,
-  changeUserRole
+  changeUserRole,
+  getCategories
 }
