@@ -19,7 +19,7 @@ export const getProductbySlug = async (slug: string) => {
     })
 
     if (!product) {
-      throw new Error('Product not found')
+      return null
     }
 
     // const { ProductImage, ...rest } = product
