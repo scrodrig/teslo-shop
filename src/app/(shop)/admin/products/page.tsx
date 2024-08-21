@@ -22,7 +22,6 @@ export default async function ProductsPage({ searchParams }: Props) {
     page,
   })
 
-  const { success, orders = [] } = await getPaginatedOrders()
 
   return (
     <>
