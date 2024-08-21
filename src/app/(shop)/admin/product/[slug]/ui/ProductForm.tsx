@@ -3,6 +3,7 @@
 import { Category, Product, ProductImage } from '@/interfaces'
 
 import Image from 'next/image'
+import clsx from 'clsx'
 import { useForm } from 'react-hook-form'
 
 interface Props {
@@ -29,6 +30,9 @@ export const ProductForm = ({ product, categories }: Props) => {
     handleSubmit,
     register,
     formState: { isValid },
+    getValues,
+    setValue,
+    watch,
   } = useForm<FormInputs>({
     defaultValues: {
       ...product,
@@ -36,6 +40,14 @@ export const ProductForm = ({ product, categories }: Props) => {
       sizes: product.sizes ?? [],
     },
   })
+
+  watch('sizes')
+
+  const onSizeChange = (size: string) => {
+    const sizes = new Set(getValues('sizes'))
+    sizes.has(size) ? sizes.delete(size) : sizes.add(size)
+    setValue('sizes', Array.from(sizes))
+  }
 
   const onSubmit = async (data: FormInputs) => {
     console.log({ data })
@@ -131,7 +143,13 @@ export const ProductForm = ({ product, categories }: Props) => {
               // bg-blue-500 text-white <--- si está seleccionado
               <div
                 key={size}
-                className="flex  items-center justify-center w-10 h-10 mr-2 border rounded-md">
+                onClick={()=> onSizeChange(size)}
+                className={clsx(
+                  'flex items-center cursor-pointer justify-center w-10 h-10 mr-2 border rounded-md',
+                  {
+                    'bg-blue-500 text-white': getValues('sizes').includes(size),
+                  }
+                )}>
                 <span>{size}</span>
               </div>
             ))}
