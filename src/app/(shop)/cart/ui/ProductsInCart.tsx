@@ -1,11 +1,11 @@
 'use client'
 
+import { ProductImage, QuantitySelector } from '@/components'
 import { useEffect, useState } from 'react'
 
 import { CartItem } from '@/interfaces'
 import Image from 'next/image'
 import Link from 'next/link'
-import { QuantitySelector } from '@/components'
 import { useCartStore } from '@/store'
 
 export const ProductsInCart = () => {
@@ -31,7 +31,7 @@ export const ProductsInCart = () => {
     <>
       {productsInCart.map((product) => (
         <div key={`${product.slug}-${product.size}`} className="flex">
-          <Image
+          <ProductImage
             src={`/products/${product.image}`}
             alt={product.title}
             width={100}
