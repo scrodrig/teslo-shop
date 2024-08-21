@@ -34,11 +34,11 @@ export async function generateMetadata(
   // const previousImages = (await parent).openGraph?.images || []
 
   return {
-    title: product.title ?? 'Not found product',
-    description: product.description ?? '',
+    title: product?.title ?? 'Not found product',
+    description: product?.description ?? '',
     openGraph: {
-      title: product.title ?? 'Not found product',
-      description: product.description ?? '',
+      title: product?.title ?? 'Not found product',
+      description: product?.description ?? '',
       images: [`/product/${product?.images[1]}`],
     },
   }
