@@ -3,6 +3,8 @@
 import { Gender, Product, Size } from '@prisma/client'
 
 import prisma from '@/lib/prisma'
+import { revalidate } from '@/app/(shop)/page'
+import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
 const productSchema = z.object({
@@ -43,46 +45,56 @@ export const createUpdateProduct = async (formData: FormData) => {
 
   const { id, ...productData } = product
 
-  const prismaTx = await prisma.$transaction(async (tx) => {
-    let product: Product
-    const tagsArray = productData.tags.split(',').map((tag) => tag.trim().toLowerCase())
+  try {
+    const prismaTx = await prisma.$transaction(async (tx) => {
+      let product: Product
+      const tagsArray = productData.tags.split(',').map((tag) => tag.trim().toLowerCase())
 
-    if (id) {
-      product = await tx.product.update({
-        where: { id },
-        data: {
-          ...productData,
-          inStock: parseFloat(productData.inStock),
-          price: parseFloat(productData.price),
-          sizes: { set: productData.sizes as Size[] },
-          tags: { set: tagsArray },
-        },
-      })
+      if (id) {
+        product = await tx.product.update({
+          where: { id },
+          data: {
+            ...productData,
+            inStock: parseFloat(productData.inStock),
+            price: parseFloat(productData.price),
+            sizes: { set: productData.sizes as Size[] },
+            tags: { set: tagsArray },
+          },
+        })
+      } else {
+        product = await prisma.product.create({
+          data: {
+            ...productData,
+            inStock: parseFloat(productData.inStock),
+            price: parseFloat(productData.price),
+            sizes: {
+              set: productData.sizes as Size[],
+            },
+            tags: {
+              set: tagsArray,
+            },
+          },
+        })
+      }
 
-    } else {
-      product = await prisma.product.create({
-        data: {
-          ...productData,
-          inStock: parseFloat(productData.inStock),
-          price: parseFloat(productData.price),
-          sizes: {
-            set: productData.sizes as Size[],
-          },
-          tags: {
-            set: tagsArray,
-          },
-        },
-      })
-    }
+      return {
+        product,
+      }
+    })
+
+    revalidatePath('/admin/products')
+    revalidatePath(`/admin/product/${product.slug}`)
+    revalidatePath(`/product/${product.slug}`)
 
     return {
-      product,
+      success: true,
+      product: prismaTx.product,
     }
-
-  })
-
-  return {
-    success: true,
-    message: 'Product created successfully',
+  } catch (error) {
+    console.error(error)
+    return {
+      success: false,
+      message: 'Error saving product',
+    }
   }
 }
