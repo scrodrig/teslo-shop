@@ -3,6 +3,7 @@
 import { Category, Product, ProductImage } from '@/interfaces'
 
 import Image from 'next/image'
+import { ProductImage as ProductImageComponent } from '@/components'
 import clsx from 'clsx'
 import { createUpdateProduct } from '@/actions'
 import { useForm } from 'react-hook-form'
@@ -217,9 +218,9 @@ export const ProductForm = ({ product, categories }: Props) => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {product.ProductImage?.map((image) => (
               <div key={image.id}>
-                <Image
+                <ProductImageComponent
                   alt={product.title ?? 'no title'}
-                  src={`/products/${image.url}`}
+                  src={image.url}
                   width={300}
                   height={300}
                   className="rounded-t shadow-md"
